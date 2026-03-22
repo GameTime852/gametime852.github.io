@@ -124,6 +124,34 @@ a:hover {
     color: #ffffff;
 }
 
+.a_nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    display: flex;
+    justify-content: left;
+    margin-bottom: 20px;
+    color: #0000FF;
+    font-size: 20px;
+    border-radius: 10px;
+    border: #000000 solid 4px;
+    background-color: #ffffff;
+    width: fit-content;
+    padding: 10px;
+    justify-content: center;
+    align-items: center
+}
+
+.a_nav:hover {
+    background-color: #000000;
+    text-decoration: none !important;  
+    color: #ffffff;
+}
+
+
+
 .container {    
     display: flex;
     flex-direction: column;
