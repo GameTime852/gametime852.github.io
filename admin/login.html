@@ -5,53 +5,7 @@
 <link rel="stylesheet" href="../style.css">
 
 <style>
-    .form-container {
-        display: flex;
-        justify-content: center; /* Wyśrodkowanie w poziomie */
-        margin-top: 80px; /* Odstęp od górnego banera */
-    }
-
-    form {
-        padding: 40px;
-        border-radius: 10px; /* Zaokrąglone rogi */
-        text-align: center; /* Wyśrodkowanie tekstu wewnątrz */
-        border: #000000 2px solid; /* Czarne obramowanie */
-    }
-
-    /* Style dla pól tekstowych i przycisku, żeby lepiej wyglądały */
-    form label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    form input[type="text"],
-    form input[type="password"] {
-        width: 90%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 20px;
-    }
-
-    form input[type="submit"] {
-        padding: 10px 20px;
-        background-color: #f0f0f0;
-        color: rgb(0, 0, 0);
-        font-weight: bold;
-
-        border: #000000 2px solid; /* Czarne obramowanie */
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-    form input[type="submit"]:hover {
-        background-color: #000000; /* Zmiana koloru po najechaniu myszką */
-        color: #ffffff;
-    }
+    
 </style>
 
 </head>
@@ -66,8 +20,12 @@
     </div>
 </div>
 
+        <div id="komunikat-bledu"></div>
+
 <div class="form-container">
-    <form onsubmit="sprawdzLogowanie(event)">
+    <div class="login-box">
+
+
 
         <label for="username">Nazwa użytkownika:</label>
         <input type="text" id="username" name="username" required>
@@ -75,29 +33,49 @@
         <label for="password">Hasło:</label>
         <input type="password" id="password" name="password" required>
 
-        <input type="submit" value="Zaloguj się">
+        <div class="show-password-container">
+            <input type="checkbox" id="show-password" onclick="pokazUkryjHaslo()">
+            <label for="show-password">Pokaż hasło</label>
+        </div>
+        <br/>
+        <button onclick="sprawdzLogowanie()">Zaloguj się</button>
 
-    </form>
+    </div>
 </div>
 
 <script>
-function sprawdzLogowanie(event) {
-    // Zatrzymujemy domyślne odświeżanie strony
-    event.preventDefault(); 
-
-    // Pobieramy wpisane dane
+// Funkcja od logowania
+function sprawdzLogowanie() {
     var login = document.getElementById("username").value;
     var haslo = document.getElementById("password").value;
+    var poleBledu = document.getElementById("komunikat-bledu");
 
-    // Sprawdzamy czy dane to admin / password
     if (login === "admin" && haslo === "password") {
-        // Jeśli tak, przenosimy do admin.html
+        poleBledu.style.display = "none";
         window.location.href = "admin.html";
     } else {
-        // Jeśli nie, wyświetlamy błąd
-        alert("Błędna nazwa użytkownika lub hasło!");
+        poleBledu.innerText = "Błędna nazwa użytkownika lub hasło!";
+        poleBledu.style.display = "block";
     }
 }
+
+// Funkcja od pokazywania/ukrywania hasła
+function pokazUkryjHaslo() {
+    var poleHasla = document.getElementById("password");
+    // Jeśli typ to password, zmień na tekst. Jeśli nie, wróć do password.
+    if (poleHasla.type === "password") {
+        poleHasla.type = "text";
+    } else {
+        poleHasla.type = "password";
+    }
+}
+
+// Opcjonalnie: Umożliwia logowanie klawiszem "Enter" na klawiaturze
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        sprawdzLogowanie();
+    }
+});
 </script>
 
 </body>
