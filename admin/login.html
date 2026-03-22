@@ -2,9 +2,7 @@
 <html>
 <head>
 <title>Portfolio JĆ - ADMIN</title>
-
 <link rel="stylesheet" href="../style.css">
-
 </head>
 <body>
 
@@ -17,25 +15,44 @@
     </div>
 </div>
 
-<form action="login_script.php" method="post">
+<div class="form-login">
+<form onsubmit="sprawdzLogowanie(event)">
+    
 
-    <label for="username">Nazwa użytkownika:</label>
 
-    <input type="text" id="username" name="username"  
-
-    required>
-
+    <label class="form-label" for="username">Nazwa użytkownika:</label>
+    <input class="form-input" type="text" id="username" name="username" required>
     <br>
 
-    <label for="password">Hasło:</label>
-
-    <input type="password" id="password" name="password" required>
-
+    <label class="form-label" for="password">Hasło:</label>
+    <input class="form-input" type="password" id="password" name="password" required>
     <br>
 
-    <input type="submit" value="Zaloguj się">
+    <input class="form-submit" type="submit" value="Zaloguj się">
+
+
 
 </form>
+</div>
+<script>
+function sprawdzLogowanie(event) {
+    // Zatrzymujemy domyślne wysyłanie formularza
+    event.preventDefault(); 
+
+    // Pobieramy wpisane dane
+    var login = document.getElementById("username").value;
+    var haslo = document.getElementById("password").value;
+
+    // Sprawdzamy czy dane to admin / password
+    if (login === "admin" && haslo === "password") {
+        // Jeśli tak, przenosimy do admin.html
+        window.location.href = "admin.html";
+    } else {
+        // Jeśli nie, wyświetlamy błąd
+        alert("Błędna nazwa użytkownika lub hasło!");
+    }
+}
+</script>
 
 </body>
 </html>
