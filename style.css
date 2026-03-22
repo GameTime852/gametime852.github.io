@@ -312,10 +312,9 @@ a:hover {
 /* Zmieniliśmy input[type="submit"] na zwykły button */
 .login-box button {
     padding: 10px 20px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    color: rgb(0, 0, 0);
+    border: solid 2px #000000;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 20px;
     width: fit-content;
@@ -323,7 +322,8 @@ a:hover {
 }
 
 .login-box button:hover {
-    background-color: #555;
+    background-color: #000000;
+    color: #ffffff
 }
 
 #komunikat-bledu {
@@ -356,4 +356,13 @@ a:hover {
     border-radius: 5px;
     font-size: 20px;
     height: fit-content;
+}
+
+textarea { 
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px; /* Zmniejszony margines */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 20px;
 }
