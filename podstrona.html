@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wczytywanie... - Portfolio JĆ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="banner">
+        <div class="icon-box">
+            <a href="index.html"><img src="img/back.png" alt="Powrót" width="180"></a>
+        </div>
+        <div class="text-box">
+            <div class="header" id="tytul-strony">Wczytywanie...</div>
+        </div>
+    </div>
+
+    <div class="text-box" style="margin-top: 40px;">
+        <p id="tresc-strony" style="white-space: pre-wrap; font-size: 18px; line-height: 1.6;">Proszę czekać, pobieram dane...</p>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+        // === TUTAJ WKLEJ SWÓJ CONFIG FIREBASE ===
+        const firebaseConfig = {
+        apiKey: "AIzaSyDZDPMe2dNb1dg5dszVrYYtstuW7tlZu5M",
+        authDomain: "portfolio-jc-947e0.firebaseapp.com",
+        projectId: "portfolio-jc-947e0",
+        storageBucket: "portfolio-jc-947e0.firebasestorage.app",
+        messagingSenderId: "202317160328",
+        appId: "1:202317160328:web:2ad8398a12c533c37aa43d"
+        };
+        // ===========================================
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Ten kod sprawdza, jaki link kliknąłeś (np. ?id=12345) i wyciąga numer ID
+        const params = new URLSearchParams(window.location.search);
+        const idWpisu = params.get("id");
+
+        if (idWpisu) {
+            // Szukamy w bazie wpisu o tym konkretnym ID
+            const wpisRef = ref(db, 'wpisy/' + idWpisu);
+            
+            get(wpisRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const dane = snapshot.val();
+                    // Zmieniamy tytuł na karcie przeglądarki
+                    document.title = dane.tytul + " - Portfolio JĆ";
+                    // Wstawiamy pobrany tytuł i treść na stronę
+                    document.getElementById("tytul-strony").innerText = dane.tytul;
+                    document.getElementById("tresc-strony").innerText = dane.tresc;
+                } else {
+                    document.getElementById("tytul-strony").innerText = "Błąd 404";
+                    document.getElementById("tresc-strony").innerText = "Taka podstrona nie istnieje lub została usunięta.";
+                }
+            }).catch((error) => {
+                console.error(error);
+                document.getElementById("tresc-strony").innerText = "Wystąpił błąd podczas łączenia z serwerem.";
+            });
+        } else {
+            document.getElementById("tytul-strony").innerText = "Brak danych";
+            document.getElementById("tresc-strony").innerText = "Nie podano identyfikatora wpisu (nie kliknięto z linku).";
+        }
+    </script>
+</body>
+</html>

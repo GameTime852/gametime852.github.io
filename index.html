@@ -15,6 +15,7 @@
         <a class="nav" href="kodland.html">KodLand</a>
         <a class="nav" href="o-mnie.html">O mnie</a>
         <a class="nav" href="wszkole.html">W szkole</a>
+        <div id="dynamiczne-linki-menu"></div>
     </div>
     <div class="header">Portfolio JĆ</div>
     <div class="icon-box">
@@ -22,7 +23,64 @@
     
 </div>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
+  // === TUTAJ WKLEJ SWÓJ CONFIG FIREBASE ===
+        const firebaseConfig = {
+        apiKey: "AIzaSyDZDPMe2dNb1dg5dszVrYYtstuW7tlZu5M",
+        authDomain: "portfolio-jc-947e0.firebaseapp.com",
+        projectId: "portfolio-jc-947e0",
+        storageBucket: "portfolio-jc-947e0.firebasestorage.app",
+        messagingSenderId: "202317160328",
+        appId: "1:202317160328:web:2ad8398a12c533c37aa43d"
+        };
+  // ===========================================
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  const wpisyRef = ref(db, 'wpisy');
+
+  onValue(wpisyRef, (snapshot) => {
+      // Szukamy naszego "pojemnika" w lewym rogu
+      const kontener = document.getElementById('dynamiczne-linki-menu');
+      
+      if (!kontener) return; // Jeśli nie ma pojemnika, skrypt się zatrzyma
+      
+      kontener.innerHTML = ""; // Czyścimy pojemnik
+      
+      const dane = snapshot.val();
+      
+      if (dane) {
+          // Object.entries wyciąga z bazy UNIKALNE ID każdego wpisu oraz jego treść
+          const wpisy = Object.entries(dane).map(([id, daneWpisu]) => {
+              return { id: id, ...daneWpisu };
+          }).reverse(); 
+          
+          wpisy.forEach(wpis => {
+              // Dla każdego wpisu tworzymy przycisk / link <a>
+              const link = document.createElement('a');
+              
+              // MAGIA: Link kieruje do uniwersalnego pliku, ale dodajemy ?id=unikalny_kod
+              link.class = 'nav';
+              link.href = `podstrona.html?id=${wpis.id}`; 
+              link.innerText = wpis.tytul; // Zamiast całego tekstu, wyświetlamy tylko Tytuł
+              
+              // Proste style dla linków (żeby były jeden pod drugim)
+              link.style.display = "block";
+              link.style.marginBottom = "5px";
+              link.style.textDecoration = "none";
+              link.style.color = "#000"; // Czarny kolor - zmień jeśli wolisz inny!
+              link.style.fontWeight = "bold";
+              
+              // Dodajemy link do menu
+              kontener.appendChild(link);
+          });
+      }
+  });
+</script>
 
 </body>
 </html>
