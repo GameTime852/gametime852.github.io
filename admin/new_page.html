@@ -27,7 +27,7 @@
         <label for="description">Opis podstrony:</label>
         <input type="text" id="description" name="description" required>
         <br/><br/>
-        <button onclick="newPage()">Stwórz nową podstrone</button>
+        <button id="zapisz-btn">Stwórz nową podstrone</button>
     </div>
     </div>
     <div class="new-page-distance"></div>
@@ -38,6 +38,9 @@
         <textarea class="textarea" id="content" name="content"></textarea>
     </div>
     </div>
+</div>
+
+<div id="komunikat-sukces" style="display: none; color: green; margin-top: 15px; font-weight: bold;">Wpis został pomyślnie opublikowany na stronie!</div>
 </div>
 
 <script type="module">
