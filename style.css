@@ -395,6 +395,7 @@ textarea {
 }
 
 .content-container-projekty {
+    display: flex;
     background-color: #ffffff;
     border: 3px solid #000000;
     border-radius: 10px;
@@ -403,6 +404,13 @@ textarea {
     width: fit-content;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+
+}
+
+.content-container-projekty span {
+    font-size: 30px;
+    font-weight: bold;
 }
 .content {
     display: flex;
