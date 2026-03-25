@@ -411,6 +411,7 @@ textarea {
 .content-container-projekty span {
     font-size: 30px;
     font-weight: bold;
+    padding-bottom: 10px;
 }
 .content {
     display: flex;
